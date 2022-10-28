@@ -15,9 +15,10 @@ class Nota {
     this.title=title
   }
 }
-
+let a =[]
 let note = [] //lista vuota
 const noteSalvate=localStorage.getItem("note")
+
 
 if(noteSalvate){
   
@@ -87,24 +88,42 @@ AddNota()
 
 }
 */
-
+let a1
+const s=[]
 const map = L.map('map').setView([51.505, -0.09], 13);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+const markerSalvate=localStorage.getItem("marker")
+if (markerSalvate){
+  a=JSON.parse(markerSalvate)
+  console.log(a[0])
+  for(let i=0;i<a.length;i++){
+    L.marker(JSON.parse(a[i])).addTo(map).bindPopup(a[i])  
+     
+  }
+    
+      
+}
 const marker = L.marker([51.5, -0.09]).addTo(map);
 marker.bindPopup("ciao")
 
 
 map.on ("click", (evt)=>{  
-
+  
   console.log(evt.latlng)
   marker.setLatLng(evt.latlng)
   latlng=JSON.stringify(evt.latlng)
-  L.marker(evt.latlng).addTo(map)
+  L.marker(evt.latlng).addTo(map).bindPopup(latlng)
   
   console.log(latlng)
-  
+   a.push(latlng)
+  console.log(a)
+   localStorage.setItem("marker",JSON.stringify(a))
 }) 
 let latlng = JSON.stringify(marker.getLatLng())
+
+
+
+
